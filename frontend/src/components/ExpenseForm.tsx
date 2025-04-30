@@ -19,6 +19,7 @@ export const ExpenseForm: React.FC<ExpenseFormProps> = ({ onSubmit }) => {
 
     const [errors, setErrors] = useState<FormErrors>({});
     const [submitError, setSubmitError] = useState<string>('');
+    const [amountInput, setAmountInput] = useState<string>('0');
 
     const validateForm = (): boolean => {
         const newErrors: FormErrors = {};
@@ -48,15 +49,36 @@ export const ExpenseForm: React.FC<ExpenseFormProps> = ({ onSubmit }) => {
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
-        setFormData(prev => ({
-            ...prev,
-            [name]: name === 'amount' ? parseFloat(value) || 0 : value
-        }));
+        if (name === 'amount') {
+            setAmountInput(value);
+            setFormData(prev => ({
+                ...prev,
+                [name]: parseFloat(value) || 0
+            }));
+        } else {
+            setFormData(prev => ({
+                ...prev,
+                [name]: value
+            }));
+        }
         // Clear error when user starts typing
         if (errors[name as keyof FormErrors]) {
             setErrors(prev => ({ ...prev, [name]: undefined }));
         }
         setSubmitError('');
+    };
+
+    const handleAmountFocus = () => {
+        if (formData.amount === 0) {
+            setAmountInput('');
+        }
+    };
+
+    const handleAmountBlur = () => {
+        if (amountInput === '') {
+            setAmountInput('0');
+            setFormData(prev => ({ ...prev, amount: 0 }));
+        }
     };
 
     const handleSubmit = (e: React.FormEvent) => {
@@ -65,6 +87,7 @@ export const ExpenseForm: React.FC<ExpenseFormProps> = ({ onSubmit }) => {
             try {
                 onSubmit(formData);
                 setFormData({ category: '', amount: 0 });
+                setAmountInput('0');
                 setErrors({});
                 setSubmitError('');
             } catch (error) {
@@ -101,8 +124,10 @@ export const ExpenseForm: React.FC<ExpenseFormProps> = ({ onSubmit }) => {
                     label="Amount"
                     name="amount"
                     type="number"
-                    value={formData.amount}
+                    value={amountInput}
                     onChange={handleChange}
+                    onFocus={handleAmountFocus}
+                    onBlur={handleAmountBlur}
                     margin="normal"
                     required
                     error={!!errors.amount}
