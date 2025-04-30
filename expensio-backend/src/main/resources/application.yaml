@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: expensio
+  data:
+    mongodb:
+      uri: mongodb://expensio_user:expensio_pass@localhost:27017/expensio-db
