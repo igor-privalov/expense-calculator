@@ -30,6 +30,8 @@ import static org.hamcrest.Matchers.*;
 @WebMvcTest(ExpenseController.class)
 class ExpenseControllerTest {
 
+    private static final String BASE_API_URL = "/api/v1/expenses";
+
     @Autowired
     private MockMvc mockMvc;
 
@@ -48,7 +50,7 @@ class ExpenseControllerTest {
         when(expenseService.saveExpense(any(ExpenseRequestDto.class))).thenReturn(responseDto);
 
         // Act & Assert
-        mockMvc.perform(post("/api/v1/expenses")
+        mockMvc.perform(post(BASE_API_URL)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(requestDto)))
                 .andExpect(status().isOk())
@@ -63,7 +65,7 @@ class ExpenseControllerTest {
         ExpenseRequestDto invalidRequest = new ExpenseRequestDto("", new BigDecimal("100.00"));
 
         // Act & Assert
-        mockMvc.perform(post("/api/v1/expenses")
+        mockMvc.perform(post(BASE_API_URL)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(invalidRequest)))
                 .andExpect(status().isBadRequest())
@@ -76,7 +78,7 @@ class ExpenseControllerTest {
         String invalidRequest = "{\"category\":\"Test Category\",\"amount\":null}";
 
         // Act & Assert
-        mockMvc.perform(post("/api/v1/expenses")
+        mockMvc.perform(post(BASE_API_URL)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(invalidRequest))
                 .andExpect(status().isBadRequest())
@@ -89,7 +91,7 @@ class ExpenseControllerTest {
         ExpenseRequestDto invalidRequest = new ExpenseRequestDto("Test Category", new BigDecimal("-100.00"));
 
         // Act & Assert
-        mockMvc.perform(post("/api/v1/expenses")
+        mockMvc.perform(post(BASE_API_URL)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(invalidRequest)))
                 .andExpect(status().isBadRequest())
@@ -106,7 +108,7 @@ class ExpenseControllerTest {
         when(expenseService.findAllExpenses(any(Pageable.class))).thenReturn(page);
 
         // Act & Assert
-        mockMvc.perform(get("/api/v1/expenses?page=0&size=10"))
+        mockMvc.perform(get(BASE_API_URL + "?page=0&size=10"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content", hasSize(1)))
                 .andExpect(jsonPath("$.content[0].id", is("1")))
@@ -130,7 +132,7 @@ class ExpenseControllerTest {
         when(expenseService.getExpenseStats(anyInt())).thenReturn(statsDto);
 
         // Act & Assert
-        mockMvc.perform(get("/api/v1/expenses/stats?topCount=2"))
+        mockMvc.perform(get(BASE_API_URL + "/stats?topCount=2"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.total", is(350.00)))
                 .andExpect(jsonPath("$.averageDaily", is(11.67)))
@@ -142,14 +144,14 @@ class ExpenseControllerTest {
     @Test
     void findAllExpenses_ShouldReturnBadRequest_WhenInvalidPagination() throws Exception {
         // Act & Assert
-        mockMvc.perform(get("/api/v1/expenses?page=-1&size=0"))
+        mockMvc.perform(get(BASE_API_URL + "?page=-1&size=0"))
                 .andExpect(status().isBadRequest());
     }
 
     @Test
     void getExpenseStats_ShouldReturnBadRequest_WhenInvalidTopCount() throws Exception {
         // Act & Assert
-        mockMvc.perform(get("/api/v1/expenses/stats?topCount=-1"))
+        mockMvc.perform(get(BASE_API_URL + "/stats?topCount=-1"))
                 .andExpect(status().isBadRequest());
     }
 } 
