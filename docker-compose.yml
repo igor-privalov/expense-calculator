@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      dockerfile: ./Dockerfile
+      context: ./frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+
+  backend:
+    restart: always
+    build:
+      dockerfile: ./Dockerfile
+      context: ./backend
+    image: expense-calculator-backend:latest
+    container_name: expense-calculator-backend
+    ports:
+      - "9090:9090"
+    depends_on:
+       - mongodb
+    environment:
+      - SPRING_DATA_MONGODB_URI=mongodb://mongodb:27017/expensio
+
+  mongodb:
+    image: mongo:latest
+    restart: always
+    container_name: expense-calculator-mongodb
+    environment:
+      - MONGO_INITDB_DATABASE=expensio
+    logging:
+      options:
+        max-size: 10m
+        max-file: "3"
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+
+volumes:
+  mongodb_data: 
