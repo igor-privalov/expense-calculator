@@ -46,33 +46,37 @@ export const ExpenseStats: React.FC<ExpenseStatsProps> = ({ stats }) => {
                                 }
                             }}
                         >
-                            <ListItemText
-                                primary={
-                                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                                        <Chip 
-                                            label={`#${index + 1}`}
-                                            color="default"
-                                            size="small"
-                                            sx={{ 
-                                                backgroundColor: 'grey.200',
-                                                color: 'text.primary'
-                                            }}
-                                        />
-                                        <Typography variant="subtitle1" component="span">
-                                            {expense.category}
-                                        </Typography>
-                                    </Box>
-                                }
-                                secondary={
-                                    <Typography 
-                                        variant="h6" 
-                                        color="text.primary"
-                                        sx={{ mt: 1 }}
-                                    >
-                                        ${expense.amount.toFixed(2)}
+                            <Box sx={{ 
+                                display: 'flex', 
+                                justifyContent: 'space-between', 
+                                alignItems: 'center',
+                                width: '100%'
+                            }}>
+                                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                                    <Chip 
+                                        label={`#${index + 1}`}
+                                        color="default"
+                                        size="small"
+                                        sx={{ 
+                                            backgroundColor: 'grey.200',
+                                            color: 'text.primary'
+                                        }}
+                                    />
+                                    <Typography variant="subtitle1">
+                                        {expense.category}
                                     </Typography>
-                                }
-                            />
+                                </Box>
+                                <Typography 
+                                    variant="h6" 
+                                    color="text.primary"
+                                    sx={{ 
+                                        fontWeight: 'bold',
+                                        color: 'primary.main'
+                                    }}
+                                >
+                                    ${expense.amount.toFixed(2)}
+                                </Typography>
+                            </Box>
                         </ListItem>
                         {index < stats.topExpenses.length - 1 && <Divider />}
                     </React.Fragment>
