@@ -120,7 +120,7 @@ export const ExpenseForm: React.FC<ExpenseFormProps> = ({ onSubmit }) => {
                     fullWidth
                     sx={{ mt: 2 }}
                 >
-                    Generate Expense
+                    Generate
                 </Button>
             </Box>
         </Paper>

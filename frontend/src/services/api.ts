@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { ExpenseFormData, ExpenseStats } from '../types/expense';
 
-const API_BASE_URL = 'http://localhost:8080/api/v1';
+const API_BASE_URL = 'http://localhost:9090/api/v1';
 
 export const api = {
     addExpense: async (expense: ExpenseFormData) => {
