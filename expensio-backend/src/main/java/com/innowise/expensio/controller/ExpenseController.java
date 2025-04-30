@@ -5,10 +5,12 @@ import com.innowise.expensio.dto.ExpenseRequestDto;
 import com.innowise.expensio.dto.ExpenseStatsDto;
 import com.innowise.expensio.service.ExpenseService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+@Validated
 @RestController
 @RequestMapping("/api/v1/expenses")
 public class ExpenseController {
@@ -39,7 +42,7 @@ public class ExpenseController {
     }
 
     @GetMapping("/stats")
-    public ExpenseStatsDto getExpenseStats(@RequestParam int topCount) {
+    public ExpenseStatsDto getExpenseStats(@RequestParam @Min(value = 1, message = "Top count must be greater than 0") int topCount) {
         return expenseService.getExpenseStats(topCount);
     }
 }
