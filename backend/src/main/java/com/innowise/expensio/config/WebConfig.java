@@ -17,9 +17,6 @@ public class WebConfig implements WebMvcConfigurer {
     @Value("${cors.allowed-headers}")
     private String[] allowedHeaders;
 
-    @Value("${cors.allow-credentials}")
-    private boolean allowCredentials;
-
     @Value("${cors.max-age}")
     private long maxAge;
 
@@ -29,7 +26,6 @@ public class WebConfig implements WebMvcConfigurer {
                 .allowedOrigins(allowedOrigins)
                 .allowedMethods(allowedMethods)
                 .allowedHeaders(allowedHeaders)
-                .allowCredentials(allowCredentials)
                 .maxAge(maxAge);
     }
 } 
