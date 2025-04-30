@@ -4,6 +4,7 @@ import com.innowise.expensio.dto.ExpenseDto;
 import com.innowise.expensio.dto.ExpenseRequestDto;
 import com.innowise.expensio.dto.ExpenseStatsDto;
 import com.innowise.expensio.service.ExpenseService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -27,7 +28,7 @@ public class ExpenseController {
     }
 
     @PostMapping
-    public ExpenseDto saveExpense(@RequestBody ExpenseRequestDto expenseRequestDto) {
+    public ExpenseDto saveExpense(@Valid @RequestBody ExpenseRequestDto expenseRequestDto) {
         return expenseService.saveExpense(expenseRequestDto);
     }
 
