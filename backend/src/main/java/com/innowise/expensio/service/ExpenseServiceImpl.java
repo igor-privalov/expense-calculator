@@ -21,6 +21,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ExpenseServiceImpl implements ExpenseService {
 
+    private static final int MONTH_DAYS = 30;
+
     private final ExpenseRepository repository;
     private final ExpenseMapper mapper;
 
@@ -46,7 +48,7 @@ public class ExpenseServiceImpl implements ExpenseService {
                 .map(Expense::getAmount)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
-        BigDecimal averageDailyExpense = totalAmount.divide(BigDecimal.valueOf(30), RoundingMode.HALF_UP);
+        BigDecimal averageDailyExpense = totalAmount.divide(BigDecimal.valueOf(MONTH_DAYS), RoundingMode.HALF_UP);
 
         List<ExpenseDto> topExpenses = getTopExpense(topCount, expenses);
 

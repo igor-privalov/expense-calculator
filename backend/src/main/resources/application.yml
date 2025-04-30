@@ -1,11 +1,11 @@
+server:
+  port: 9090
 spring:
   application:
     name: expensio
   data:
     mongodb:
-      uri: mongodb://expensio_user:expensio_pass@localhost:27017/expensio-db
-server:
-  port: 9090
+      uri: mongodb://localhost:27017/expensio-db
 management:
   endpoints:
     web:

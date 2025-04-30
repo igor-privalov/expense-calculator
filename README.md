@@ -2,6 +2,17 @@
 
 A full-stack application for managing and calculating expenses, built with React for the frontend and Spring Boot for the backend.
 
+[![GitHub Repository](https://img.shields.io/badge/GitHub-Repository-blue)](https://github.com/igor-privalov/expense-calculator)
+
+## Project Overview
+
+This project is part of the AI In Development course homework, focusing on three main tasks:
+1. Web Application: Expense Calculator (implemented in this repository)
+2. API Testing: Identifying Defects in Product Data
+3. SQL Queries: Analyzing a Database Online
+
+For detailed information about all tasks, please refer to [README.md](https://github.com/igor-privalov/ai-in-development-homework/blob/main/README.md).
+
 ## Prerequisites
 - Node.js (v20 or higher)
 - Java (21 or higher)

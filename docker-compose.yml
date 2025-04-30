@@ -22,14 +22,14 @@ services:
     depends_on:
        - mongodb
     environment:
-      - SPRING_DATA_MONGODB_URI=mongodb://mongodb:27017/expensio
+      - SPRING_DATA_MONGODB_URI=mongodb://mongodb:27017/expensio-db
 
   mongodb:
     image: mongo:latest
     restart: always
     container_name: expense-calculator-mongodb
     environment:
-      - MONGO_INITDB_DATABASE=expensio
+      - MONGO_INITDB_DATABASE=expensio-db
     logging:
       options:
         max-size: 10m
